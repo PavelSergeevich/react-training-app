@@ -9,6 +9,7 @@ interface PhotoProps {
   //thumbnailUrl: string;
   title: string;
   url: string;
+  like: boolean;
 }
 
 interface PhotoSet {
@@ -21,17 +22,12 @@ const GridWrapper = (props: PhotoSet) => {
       <Grid container spacing={4}>
         {props.photos.map((photo: PhotoProps) => (
           <Grid item key={photo.id} xs={12} sm={6} md={4}>
-            {/*<PhotoCard*/}
-            {/*  url={photo.url}*/}
-            {/*  albumId={photo.albumId}*/}
-            {/*  id={photo.id}*/}
-            {/*  title={photo.title}*/}
-            {/*/>*/}
             <PhotoCardFavorite
               title={photo.title}
               url={photo.url}
               albumId={photo.albumId}
               id={photo.id}
+              like={photo.like}
             />
           </Grid>
         ))}

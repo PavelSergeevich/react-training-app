@@ -5,9 +5,11 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { Info, Title } from '../constants/global';
+import PaginationBar from '../utils/usePagination';
 
-const Hero = ({ childToParent }: any) => {
-  const data = 2;
+const Hero = ({ showAll, showFavorites }: any) => {
+  const allToggle = true;
+  const favoriteToggle = true;
   return (
     <Box
       sx={{
@@ -42,12 +44,16 @@ const Hero = ({ childToParent }: any) => {
         >
           <Button
             variant="contained"
-            color="warning"
-            onClick={() => childToParent(data)}
+            color="primary"
+            onClick={() => showAll(allToggle)}
           >
             All photos
           </Button>
-          <Button variant="outlined" color="warning">
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => showFavorites(favoriteToggle)}
+          >
             Favorites
           </Button>
         </Stack>

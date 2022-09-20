@@ -10,6 +10,11 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import {
+  addFavoriteSStorage,
+  checkFavoritesInSStorage,
+  getFavoritesFromSStorage,
+} from '../utils/sessionStorage';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -21,6 +26,7 @@ interface PhotoProps {
   //thumbnailUrl: string;
   title: string;
   url: string;
+  like: boolean;
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
@@ -35,18 +41,17 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export default function PhotoCardFavorite(props: PhotoProps) {
-  const colorInherit = `rgba(0, 0, 0, 0.54)`;
   const [expanded, setExpanded] = React.useState(false);
-  const [favoriteColor, setFavoriteColor] = React.useState(colorInherit);
+  const [isFavorite, setIsFavorite] = React.useState(props.like);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleFavoriteClick = () => {
-    favoriteColor === colorInherit
-      ? setFavoriteColor('red')
-      : setFavoriteColor(colorInherit);
+  const handleFavoriteClick = (event: any) => {
+    isFavorite ? setIsFavorite(false) : setIsFavorite(true);
+    checkFavoritesInSStorage(props.id);
+    addFavoriteSStorage();
   };
 
   return (
@@ -63,11 +68,8 @@ export default function PhotoCardFavorite(props: PhotoProps) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon
-            style={{ color: favoriteColor }}
-            onClick={handleFavoriteClick}
-          />
+        <IconButton aria-label="add to favorites" onClick={handleFavoriteClick}>
+          <FavoriteIcon color={isFavorite ? 'error' : 'inherit'} />
         </IconButton>
         <IconButton aria-label="share" href={props.url} target="_blank">
           <OpenInNewIcon />
