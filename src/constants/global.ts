@@ -5,5 +5,6 @@ const UrlPage = (start: number, limit: number) => {
 const Title = 'Training React App';
 const Info =
   'Web application that displays photos and allows a user to mark the ones they like as favorites.';
+const pageSize = 6;
 
-export { Url, UrlPage, Title, Info };
+export { Url, UrlPage, Title, Info, pageSize };

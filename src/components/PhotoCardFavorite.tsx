@@ -10,11 +10,12 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { useState } from 'react';
 import {
-  addFavoriteSStorage,
-  checkFavoritesInSStorage,
-  getFavoritesFromSStorage,
-} from '../utils/sessionStorage';
+  getFavoritesStorage,
+  searcher,
+  setFavoriteToStorage,
+} from '../utils/localStorage';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -41,17 +42,18 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export default function PhotoCardFavorite(props: PhotoProps) {
-  const [expanded, setExpanded] = React.useState(false);
-  const [isFavorite, setIsFavorite] = React.useState(props.like);
+  const [expanded, setExpanded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(
+    searcher(getFavoritesStorage(), props.id)
+  );
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleFavoriteClick = (event: any) => {
+  const handleFavoriteClick = () => {
     isFavorite ? setIsFavorite(false) : setIsFavorite(true);
-    checkFavoritesInSStorage(props.id);
-    addFavoriteSStorage();
+    setFavoriteToStorage(props.id);
   };
 
   return (
@@ -60,7 +62,7 @@ export default function PhotoCardFavorite(props: PhotoProps) {
         component="img"
         height="194"
         image={props.url}
-        alt={props.title}
+        alt={`${props.id}`}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">

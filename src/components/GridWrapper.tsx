@@ -2,36 +2,44 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import PhotoCardFavorite from './PhotoCardFavorite';
+import PaginationBar from './features/usePagination';
+import { useState } from 'react';
+import { FavoriteToggleType, PhotoProps } from '../utils/types';
+import PaginationFavoritesBar from './features/usePaginationFavorites';
 
-interface PhotoProps {
-  albumId: number;
-  id: number;
-  //thumbnailUrl: string;
-  title: string;
-  url: string;
-  like: boolean;
-}
+const GridWrapper = ({ toggle }: FavoriteToggleType) => {
+  const [cardsToShow, setCardsToShow] = useState([]);
 
-interface PhotoSet {
-  photos: Array<PhotoProps>;
-}
+  const photos = cardsToShow.map((card: PhotoProps) => (
+    <Grid item key={card.id} xs={12} sm={6} md={4}>
+      <PhotoCardFavorite
+        title={card.title}
+        url={card.url}
+        albumId={card.albumId}
+        id={card.id}
+        like={card.like}
+      />
+    </Grid>
+  ));
 
-const GridWrapper = (props: PhotoSet) => {
   return (
-    <Container sx={{ py: 8 }} maxWidth="md">
+    <Container sx={{ py: 2 }} maxWidth="md">
       <Grid container spacing={4}>
-        {props.photos.map((photo: PhotoProps) => (
-          <Grid item key={photo.id} xs={12} sm={6} md={4}>
-            <PhotoCardFavorite
-              title={photo.title}
-              url={photo.url}
-              albumId={photo.albumId}
-              id={photo.id}
-              like={photo.like}
-            />
-          </Grid>
-        ))}
+        {photos}
       </Grid>
+      {toggle ? (
+        <PaginationBar
+          setCardsToShow={(p: React.SetStateAction<never[]>) =>
+            setCardsToShow(p)
+          }
+        />
+      ) : (
+        <PaginationFavoritesBar
+          setCardsToShow={(p: React.SetStateAction<never[]>) =>
+            setCardsToShow(p)
+          }
+        />
+      )}
     </Container>
   );
 };

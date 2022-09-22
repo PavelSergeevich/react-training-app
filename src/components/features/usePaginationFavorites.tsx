@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Box, Pagination } from '@mui/material';
-import service from '../api/servise';
+import service from '../../utils/servise';
+import { pageSize } from '../../constants/global';
 
-const pageSize = 3;
-
-// @ts-ignore
-export default function PaginationBar({ setCardsToShow }) {
+export default function PaginationFavoritesBar({ setCardsToShow }: any) {
   const [pagination, setPagination] = useState({
     count: 0,
     from: 0,
@@ -18,10 +16,11 @@ export default function PaginationBar({ setCardsToShow }) {
       .getData({ from: pagination.from, to: pagination.to })
       .then((response) => {
         // @ts-ignore
-        setPagination({ ...pagination, count: response.count });
+        setPagination({ ...pagination, count: response.countFav });
         // @ts-ignore
-        setCardsToShow(response.data);
+        setCardsToShow(response.favorite);
       });
+    // eslint-disable-next-line
   }, [pagination.from, pagination.to]);
 
   const handlePageChange = (event: any, page: number) => {

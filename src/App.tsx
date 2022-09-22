@@ -5,48 +5,22 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
 import GridWrapper from './components/GridWrapper';
-import { useEffect, useState } from 'react';
-import getPhoto from './api/fetchData';
-import { Url, UrlPage } from './constants/global';
-import {
-  getFavoritesFromSStorage,
-  getPhotosFromSStorage,
-  isSStorage,
-} from './utils/sessionStorage';
-import PaginationBar from './utils/usePagination';
+import { useState } from 'react';
 
 const theme = createTheme();
 
 export default function App() {
-  const [photos, setPhotos] = useState(getPhotosFromSStorage());
-  const [favorites, setFavorites] = useState(getFavoritesFromSStorage());
-  const [cardsToShow, setCardsToShow] = useState([]);
-  const [allToggle, setAllToggle] = useState(false);
-  const [favoriteToggle, setFavoriteToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
 
   const showAll = (heroData: boolean) => {
-    setFavoriteToggle(!heroData);
-    setAllToggle(heroData);
+    setToggle(heroData);
+    console.log('showAll>>', toggle);
   };
 
   const showFavorites = (heroData: boolean) => {
-    setAllToggle(!heroData);
-    setFavoriteToggle(heroData);
+    setToggle(!heroData);
+    console.log('showFavorites>>', toggle);
   };
-
-  useEffect(() => {
-    if (isSStorage()) {
-      setPhotos(getPhotosFromSStorage());
-    } else {
-      getPhoto(Url + UrlPage(0, 120)).then((data) => setPhotos(data));
-    }
-  }, []);
-
-  useEffect(() => {
-    allToggle ? setCardsToShow(photos) : setCardsToShow(favorites);
-    setFavorites(getFavoritesFromSStorage());
-    console.log(favorites);
-  }, [allToggle, favoriteToggle]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -54,16 +28,7 @@ export default function App() {
       <Header />
       <main>
         <Hero showAll={showAll} showFavorites={showFavorites} />
-        {allToggle ? (
-          <GridWrapper photos={cardsToShow} />
-        ) : (
-          <GridWrapper photos={favorites} />
-        )}
-        <PaginationBar
-          setCardsToShow={(p: React.SetStateAction<never[]>) =>
-            setCardsToShow(p)
-          }
-        />
+        <GridWrapper toggle={toggle} />
       </main>
       <Footer />
     </ThemeProvider>
