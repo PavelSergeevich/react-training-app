@@ -1,6 +1,11 @@
-# Getting Started with Create React App
+# Training react App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project uses the [MUI](https://mui.com/material-ui/getting-started/overview/) component library.\
+The page displays a list of pictures from the [API](https://jsonplaceholder.typicode.com/photos) .\
+There is a possibility of pagination.\
+The data is downloaded in portions using the service **src/utils/service**.\
+As a user, we can mark our favorite photos.\
+By switching the buttons **ALL PHOTOS** and **FAVORITES**, you can display these categories of pictures separately.
 
 ## Available Scripts
 
