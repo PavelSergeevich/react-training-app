@@ -57,7 +57,7 @@ export default function PhotoCardFavorite(props: PhotoProps) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} data-testid="photoCard">
       <CardMedia
         component="img"
         height="194"
@@ -70,8 +70,15 @@ export default function PhotoCardFavorite(props: PhotoProps) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={handleFavoriteClick}>
-          <FavoriteIcon color={isFavorite ? 'error' : 'inherit'} />
+        <IconButton
+          aria-label="add to favorites"
+          onClick={handleFavoriteClick}
+          data-testid="addFavorite"
+        >
+          <FavoriteIcon
+            data-testid="like"
+            color={isFavorite ? 'error' : 'inherit'}
+          />
         </IconButton>
         <IconButton aria-label="share" href={props.url} target="_blank">
           <OpenInNewIcon />

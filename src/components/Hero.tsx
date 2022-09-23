@@ -43,6 +43,7 @@ const Hero = ({ showAll, showFavorites }: any) => {
           justifyContent="center"
         >
           <Button
+            data-testid="heroBtn"
             variant="contained"
             color="primary"
             onClick={() => {
