@@ -7,7 +7,7 @@ import * as React from 'react';
 const Header = () => {
   return (
     <AppBar position="relative">
-      <Toolbar>
+      <Toolbar onClick={() => window.location.reload()}>
         <CameraIcon sx={{ mr: 2 }} />
         <Typography variant="h6" color="inherit" noWrap>
           Placeholder Album App

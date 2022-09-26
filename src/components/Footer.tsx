@@ -11,6 +11,7 @@ const GitLink = () => {
       <Link
         color="inherit"
         href="https://github.com/PavelSergeevich/react-training-app"
+        target="_blank"
       >
         Git Repo
       </Link>{' '}

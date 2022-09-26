@@ -14,12 +14,10 @@ export default function App() {
 
   const showAll = (heroData: boolean) => {
     setToggle(heroData);
-    console.log('showAll>>', toggle);
   };
 
   const showFavorites = (heroData: boolean) => {
     setToggle(!heroData);
-    console.log('showFavorites>>', toggle);
   };
 
   return (
